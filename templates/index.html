@@ -1,0 +1,84 @@
+<!-- File: templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My DreamBoard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>My DreamBoard 🌌</h1>
+
+  <form action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
+    <label>Select image:</label>
+    <input type="file" name="image" required />
+
+    <label>Add affirmation:</label>
+    <input type="text" name="caption" placeholder="e.g. I am confident and capable" />
+
+    <button type="submit">Add to Board</button>
+  </form>
+
+  <div class="board" id="board">
+    {% for item in items %}
+      <div class="draggable" style="top: 100px; left: 100px;" data-id="{{ loop.index }}">
+        <img src="{{ url_for('static', filename='uploads/' + item.filename) }}" alt="Vision image" />
+      </div>
+      {% if item.caption %}
+      <div class="draggable caption" contenteditable="true" style="top: 250px; left: 150px;" data-id="{{ loop.index }}">
+        {{ item.caption }}
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <button onclick="saveLayout()" class="action-btn">💾 Save Layout</button>
+  <button onclick="exportBoard()" class="action-btn">📸 Export as Image</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+  const board = document.getElementById('board');
+  const draggables = document.querySelectorAll('.draggable');
+
+  draggables.forEach(el => {
+    let offsetX, offsetY;
+
+    el.addEventListener('mousedown', (e) => {
+      const rect = el.getBoundingClientRect();
+      const boardRect = board.getBoundingClientRect();
+
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+
+      function moveAt(pageX, pageY) {
+        let left = pageX - boardRect.left - offsetX;
+        let top = pageY - boardRect.top - offsetY;
+
+        // Clamp within the board
+        left = Math.max(0, Math.min(left, board.offsetWidth - el.offsetWidth));
+        top = Math.max(0, Math.min(top, board.offsetHeight - el.offsetHeight));
+
+        el.style.left = `${left}px`;
+        el.style.top = `${top}px`;
+      }
+
+      function onMouseMove(e) {
+        moveAt(e.pageX, e.pageY);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      document.addEventListener('mouseup', function mouseUpHandler() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', mouseUpHandler);
+      });
+    });
+
+    el.ondragstart = () => false;
+  });
+</script>
+
+</body>
+</html>
