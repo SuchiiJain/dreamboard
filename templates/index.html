@@ -43,42 +43,45 @@
   const draggables = document.querySelectorAll('.draggable');
 
   draggables.forEach(el => {
-    let offsetX, offsetY;
+    let shiftX, shiftY;
 
-    el.addEventListener('mousedown', (e) => {
-      const rect = el.getBoundingClientRect();
+    el.addEventListener('mousedown', function (e) {
+      e.preventDefault(); // Prevent weird default drag behavior
+
+      const elRect = el.getBoundingClientRect();
       const boardRect = board.getBoundingClientRect();
 
-      offsetX = e.clientX - rect.left;
-      offsetY = e.clientY - rect.top;
+      shiftX = e.clientX - elRect.left;
+      shiftY = e.clientY - elRect.top;
 
-      function moveAt(pageX, pageY) {
-        let left = pageX - boardRect.left - offsetX;
-        let top = pageY - boardRect.top - offsetY;
+      function moveAt(clientX, clientY) {
+        let newLeft = clientX - boardRect.left - shiftX;
+        let newTop = clientY - boardRect.top - shiftY;
 
-        // Clamp within the board
-        left = Math.max(0, Math.min(left, board.offsetWidth - el.offsetWidth));
-        top = Math.max(0, Math.min(top, board.offsetHeight - el.offsetHeight));
+        // Clamp within board
+        newLeft = Math.max(0, Math.min(newLeft, board.offsetWidth - el.offsetWidth));
+        newTop = Math.max(0, Math.min(newTop, board.offsetHeight - el.offsetHeight));
 
-        el.style.left = `${left}px`;
-        el.style.top = `${top}px`;
+        el.style.left = newLeft + 'px';
+        el.style.top = newTop + 'px';
       }
 
       function onMouseMove(e) {
-        moveAt(e.pageX, e.pageY);
+        moveAt(e.clientX, e.clientY);
       }
 
       document.addEventListener('mousemove', onMouseMove);
 
-      document.addEventListener('mouseup', function mouseUpHandler() {
+      document.addEventListener('mouseup', function mouseUp() {
         document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', mouseUpHandler);
+        document.removeEventListener('mouseup', mouseUp);
       });
     });
 
     el.ondragstart = () => false;
   });
 </script>
+
 
 </body>
 </html>
