@@ -65,11 +65,53 @@ function makeBoardItem(content, type = "text") {
   div.ondragstart = () => false;
 }
 
-// Add text
 addTextBtn.addEventListener("click", () => {
   const txt = affirmationInput.value.trim();
+  const font = document.getElementById("fontSelect").value;
+  const color = document.getElementById("fontColor").value;
+  const size = document.getElementById("fontSize").value;
+
   if (txt) {
-    makeBoardItem(txt, "text");
+    const div = document.createElement("div");
+    div.classList.add("board-item");
+    const pos = randomPosition();
+    div.style.left = pos.x + "px";
+    div.style.top = pos.y + "px";
+
+    const p = document.createElement("p");
+    p.innerText = txt;
+    p.style.fontFamily = font;
+    p.style.color = color;
+    p.style.fontSize = size + "px";
+    div.appendChild(p);
+
+    board.appendChild(div);
+
+    // Enable dragging
+    div.onmousedown = function (e) {
+      let shiftX = e.clientX - div.getBoundingClientRect().left;
+      let shiftY = e.clientY - div.getBoundingClientRect().top;
+
+      function moveAt(pageX, pageY) {
+        div.style.left = pageX - shiftX + 'px';
+        div.style.top = pageY - shiftY + 'px';
+      }
+
+      function onMouseMove(e) {
+        moveAt(e.pageX, e.pageY);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      div.onmouseup = function () {
+        document.removeEventListener('mousemove', onMouseMove);
+        div.onmouseup = null;
+      };
+    };
+
+    div.ondragstart = () => false;
+
+    // Reset input
     affirmationInput.value = "";
   }
 });

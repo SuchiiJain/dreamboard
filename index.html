@@ -11,11 +11,27 @@
     <aside class="sidebar">
       <h2>🎨 Add to Your Board</h2>
 
-      <div class="section">
+    <div class="section">
         <label for="affirmationInput">Add Affirmation:</label>
-        <input type="text" id="affirmationInput" placeholder="Type here..." />
+        <input type="text" id="affirmationInput" placeholder="Type your affirmation..." />
+
+        <label for="fontSelect">Font:</label>
+        <select id="fontSelect">
+        <option value="Arial">Arial</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Courier New">Courier New</option>
+        <option value="Verdana">Verdana</option>
+        </select>
+
+        <label for="fontColor">Font Color:</label>
+        <input type="color" id="fontColor" value="#000000" />
+
+        <label for="fontSize">Font Size:</label>
+        <input type="range" id="fontSize" min="14" max="48" value="24" />
+
         <button id="addTextBtn">Add Text</button>
-      </div>
+    </div>
+
 
       <div class="section">
         <label for="imageUpload">Upload Image:</label>

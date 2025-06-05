@@ -44,6 +44,12 @@ body {
 
 input[type="text"],
 input[type="file"],
+
+select, input[type="color"], input[type="range"] {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
 select {
   width: 100%;
   padding: 6px;
