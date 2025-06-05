@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DreamBoard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <h2>🎨 Add to Your Board</h2>
+
+      <div class="section">
+        <label for="affirmationInput">Add Affirmation:</label>
+        <input type="text" id="affirmationInput" placeholder="Type here..." />
+        <button id="addTextBtn">Add Text</button>
+      </div>
+
+      <div class="section">
+        <label for="imageUpload">Upload Image:</label>
+        <input type="file" id="imageUpload" accept="image/*" />
+      </div>
+
+      <div class="section">
+        <label for="emojiPicker">Pick Emoji:</label>
+        <select id="emojiPicker">
+          <option value="💖">💖</option>
+          <option value="✨">✨</option>
+          <option value="🌟">🌟</option>
+          <option value="🔥">🔥</option>
+          <option value="🌈">🌈</option>
+          <option value="🎯">🎯</option>
+        </select>
+        <button id="addEmojiBtn">Add Emoji</button>
+      </div>
+    </aside>
+
+    <main class="board" id="visionBoard">
+      <!-- Items will be added here -->
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

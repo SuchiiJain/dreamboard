@@ -1,0 +1,100 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #f7e6ff, #e0f7fa);
+  color: #333;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  height: 100%;
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 250px;
+  background-color: #ffffffcc;
+  padding: 20px;
+  border-right: 2px solid #d4d4d4;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.section label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="file"],
+select {
+  width: 100%;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 8px;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #8e44ad;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background-color: #732d91;
+}
+
+/* Vision board canvas */
+.board {
+  flex: 1;
+  padding: 20px;
+  position: relative;
+  overflow: auto;
+  background: url('https://i.imgur.com/BxMOWrX.jpg') no-repeat center center fixed;
+  background-size: cover;
+  border-left: 2px solid #d4d4d4;
+}
+
+/* Elements added to board */
+.board-item {
+  position: absolute;
+  padding: 10px;
+  border: 2px dashed #8e44ad;
+  border-radius: 8px;
+  background-color: #ffffffaa;
+  cursor: move;
+  user-select: none;
+}
+
+.board-item img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.board-item p {
+  font-size: 1rem;
+  word-wrap: break-word;
+}
